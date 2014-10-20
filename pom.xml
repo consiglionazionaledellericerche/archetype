@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>archetype</artifactId>
   <groupId>it.cnr.si</groupId>
-  <version>0.1</version>
+  <version>0.2</version>
   <name>CNR USID Archetype</name>
 
   <packaging>pom</packaging>
@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <nexus.url>http://bandt.si.cnr.it:8280/nexus</nexus.url>
-    <java.version>1.6</java.version>
+    <java.version>1.7</java.version>
   </properties>
 
   <repositories>
@@ -71,8 +71,40 @@
         </configuration>
       </plugin>
       <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- explicitly define maven-deploy-plugin after other to force exec order -->
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.7</version>
+        <executions>
+          <execution>
+            <id>deploy</id>
+            <phase>deploy</phase>
+            <goals><goal>deploy</goal></goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
