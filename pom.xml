@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>archetype</artifactId>
   <groupId>it.cnr.si</groupId>
-  <version>0.12</version>
+  <version>0.13-SNAPSHOT</version>
   <name>CNR USID Archetype</name>
 
   <packaging>pom</packaging>
@@ -137,8 +137,8 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/tags/archetype-0.12</connection>
-    <developerConnection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/tags/archetype-0.12</developerConnection>
+    <connection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</connection>
+    <developerConnection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</developerConnection>
   </scm>
 
 </project>
