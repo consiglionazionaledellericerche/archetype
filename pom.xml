@@ -124,4 +124,10 @@
       <url>${nexus.url}/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
+
+  <scm>
+    <connection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</connection>
+    <developerConnection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</developerConnection>
+  </scm>
+
 </project>
