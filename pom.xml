@@ -104,6 +104,17 @@
             <phase>deploy</phase>
             <goals><goal>deploy</goal></goals>
           </execution>
+                    <execution>
+                      <id>default-deploy</id>
+                     <phase>deploy</phase>
+                     <goals>
+                   <goal>deploy</goal>
+                </goals>
+                <configuration>
+                <skip>true</skip>
+              </configuration>
+          </execution>
+
         </executions>
       </plugin>
     </plugins>
