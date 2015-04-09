@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>archetype</artifactId>
   <groupId>it.cnr.si</groupId>
-  <version>0.2</version>
+  <version>0.3-SNAPSHOT</version>
   <name>CNR USID Archetype</name>
 
   <packaging>pom</packaging>
