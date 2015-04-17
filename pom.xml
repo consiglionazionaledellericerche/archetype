@@ -67,7 +67,8 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
-          <encoding>UTF-8</encoding>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <charset>${project.build.sourceEncoding}</charset>
         </configuration>
       </plugin>
       <plugin>
