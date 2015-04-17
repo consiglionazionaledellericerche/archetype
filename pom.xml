@@ -138,8 +138,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</connection>
-    <developerConnection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/trunk/archetype</developerConnection>
+    <connection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</connection>
+    <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 
 </project>
