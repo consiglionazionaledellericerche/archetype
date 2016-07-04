@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>archetype</artifactId>
   <groupId>it.cnr.si</groupId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.3</version>
   <name>CNR RSI Archetype</name>
 
   <packaging>pom</packaging>
@@ -169,7 +169,7 @@
   <scm>
     <connection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</connection>
     <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>archetype-1.0.3</tag>
   </scm>
 
 </project>
