@@ -1,201 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>archetype</artifactId>
-  <groupId>it.cnr.si</groupId>
-  <version>1.0.8-SNAPSHOT</version>
-  <name>CNR RSI Archetype</name>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>archetype</artifactId>
+    <groupId>it.cnr.si</groupId>
+    <version>1.0.8-SNAPSHOT</version>
+    <name>CNR SI Archetype</name>
+    <description>Archetype for push artifact to Maven repository</description>
+    <url>http://www.cnr.it</url>
+    <packaging>pom</packaging>
 
-  <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <nexus.repository.releases>content/repositories/releases</nexus.repository.releases>
+        <nexus.repository.snapshots>content/repositories/snapshots</nexus.repository.snapshots>
+    </properties>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>
-  </properties>
+    <repositories>
+        <repository>
+            <id>cnr</id>
+            <name>cnr public</name>
+            <url>${nexus.url}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>cnr-snapshots</id>
+            <name>cnr public</name>
+            <url>${nexus.url}/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-  <repositories>
-    <repository>
-      <id>cnr</id>
-      <name>cnr public</name>
-      <url>${nexus.url}/content/groups/public</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>cnr-snapshots</id>
-      <name>cnr public</name>
-      <url>${nexus.url}/content/groups/public-snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>cnr</id>
-      <name>cnr public</name>
-      <url>${nexus.url}/content/groups/public</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>cnr-snapshots</id>
-      <name>cnr snapshots</name>
-      <url>${nexus.url}/content/groups/public-snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
-
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.2</version>
-        <executions>
-          <execution>
-            <phase>deploy</phase>
-            <goals>
-              <goal>sonar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-          <charset>${project.build.sourceEncoding}</charset>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-        <configuration>
-          <tagNameFormat>@{project.version}</tagNameFormat>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.3</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <!-- explicitly define maven-deploy-plugin after other to force exec order -->
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version>
-        <executions>
-          <execution>
-            <id>deploy</id>
-            <phase>deploy</phase>
-            <goals><goal>deploy</goal></goals>
-          </execution>
-          <execution>
-            <id>default-deploy</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>deploy</goal>
-            </goals>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </execution>
-
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.7.201606060606</version>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>cnr</id>
+            <name>cnr public</name>
+            <url>${nexus.url}/content/groups/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>cnr-snapshots</id>
+            <name>cnr snapshots</name>
+            <url>${nexus.url}/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.0.0</version>
-          <configuration>
-            <filesets>
-              <fileset>
-                <directory>${project.basedir}</directory>
-                <includes>
-                  <include>**/target/**</include>
-                </includes>
-              </fileset>
-            </filesets>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.2</version>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>sonar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.7.201606060606</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>${project.basedir}</directory>
+                                <includes>
+                                    <include>**/target/**</include>
+                                </includes>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-  <distributionManagement>
-    <repository>
-      <id>buildandtest</id>
-      <name>nexus</name>
-      <url>${nexus.url}/content/repositories/releases</url>
-    </repository>
+    <distributionManagement>
+        <repository>
+            <id>buildandtest</id>
+            <name>nexus</name>
+            <url>${nexus.url}/${nexus.repository.releases}</url>
+        </repository>
 
-    <snapshotRepository>
-      <id>buildandtest</id>
-      <name>nexus</name>
-      <url>${nexus.url}/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
+        <snapshotRepository>
+            <id>buildandtest</id>
+            <name>nexus</name>
+            <url>${nexus.url}/${nexus.repository.snapshots}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <comments>
+                Copyright 2014-2015 the original author or authors.
 
-  <scm>
-    <connection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</connection>
-    <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
+                Licensed under the Apache License, Version 2.0 (the "License");
+                you may not use this file except in compliance with the License.
+                You may obtain a copy of the License at
+
+                http://www.apache.org/licenses/LICENSE-2.0
+
+                Unless required by applicable law or agreed to in writing, software
+                distributed under the License is distributed on an "AS IS" BASIS,
+                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+                implied.
+
+                See the License for the specific language governing permissions and
+                limitations under the License.
+            </comments>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>marco.spasiano</id>
+            <name>Marco Spasiano</name>
+            <email>marco.spasiano at cnr.it</email>
+            <organization>Consiglio Nazionale delle Ricerche</organization>
+            <organizationUrl>http://www.cnr.it</organizationUrl>
+        </developer>
+        <developer>
+            <id>francesco.uliana</id>
+            <name>Francesco Uliana</name>
+            <email>francesco at uliana.it</email>
+        </developer>
+        <developer>
+            <id>fabrizio.pierleoni</id>
+            <name>Fabrizio Pierleoni</name>
+            <email>fabrizio.pierleoni at cnr.it</email>
+            <organization>Consiglio Nazionale delle Ricerche</organization>
+            <organizationUrl>http://www.cnr.it</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</connection>
+        <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/archetype.git</developerConnection>
+        <url>http://git.si.cnr.it/dev/archetype</url>
+        <tag>HEAD</tag>
+    </scm>
 
 </project>
