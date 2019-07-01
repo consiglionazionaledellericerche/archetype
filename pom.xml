@@ -277,8 +277,8 @@
                         </executions>
                         <configuration>
                             <serverId>sonatype</serverId>
-                            <nexusUrl>${sonatype.url}</nexusUrl>
-                            <stagingProfileId>itcnr</stagingProfileId>
+                            <nexusUrl>${sonatype.url}/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>
