@@ -14,6 +14,7 @@
         <java.version>1.8</java.version>
         <nexus.repository.releases>content/repositories/releases</nexus.repository.releases>
         <nexus.repository.snapshots>content/repositories/snapshots</nexus.repository.snapshots>
+        <nexus.url></nexus.url>
     </properties>
 
     <repositories>
@@ -84,7 +85,6 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <charset>${project.build.sourceEncoding}</charset>
                 </configuration>
             </plugin>
             <plugin>
@@ -242,6 +242,11 @@
     <profiles>
         <profile>
             <id>maven-central</id>
+            <properties>
+                <sonatype.repository.releases>service/local/staging/deploy/maven2</sonatype.repository.releases>
+                <sonatype.repository.snapshots>content/repositories/snapshots</sonatype.repository.snapshots>
+                <sonatype.url>https://oss.sonatype.org</sonatype.url>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -257,8 +262,40 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.6</version>
+                        <executions>
+                            <execution>
+                                <id>default-deploy</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <serverId>sonatype</serverId>
+                            <nexusUrl>${sonatype.url}</nexusUrl>
+                            <stagingProfileId>itcnr</stagingProfileId>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
+            <distributionManagement>
+                <repository>
+                    <id>sonatype</id>
+                    <name>nexus</name>
+                    <url>${sonatype.url}/${sonatype.repository.releases}</url>
+                </repository>
+
+                <snapshotRepository>
+                    <id>sonatype</id>
+                    <name>nexus</name>
+                    <url>${sonatype.url}/${sonatype.repository.snapshots}</url>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
     </profiles>
 </project>
