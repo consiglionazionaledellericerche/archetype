@@ -355,7 +355,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <file>publiccode.yml</file>
+                            <filesToInclude>*publiccode.yml</filesToInclude>
+
                             <replacements>
                                 <replacement>
                                     <token>softwareVersion.*</token>
