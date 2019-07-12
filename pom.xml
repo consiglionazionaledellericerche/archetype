@@ -308,5 +308,68 @@
                 </snapshotRepository>
             </distributionManagement>
         </profile>
+        <profile>
+            <id>publiccode</id>
+            <properties>
+                <timestamp>${maven.build.timestamp}</timestamp>
+                <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-scm-plugin</artifactId>
+                            <configuration>
+                                <includes>publiccode.yml</includes>
+                                <message>changed softwareVersion and releaseDate on publiccode.yml [ci skip]</message>
+                                <pushChanges>true</pushChanges>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.3</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                            <preparationGoals>clean verify scm:checkin</preparationGoals>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>maven-replacer-plugin</artifactId>
+                        <version>1.3.5</version>
+                        <executions>
+                            <execution>
+                                <id>replaceTokens</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <file>publiccode.yml</file>
+                            <replacements>
+                                <replacement>
+                                    <token>softwareVersion.*</token>
+                                    <value>softwareVersion: ${project.version}</value>
+                                </replacement>
+                                <replacement>
+                                    <token>releaseDate.*</token>
+                                    <value>releaseDate: '${timestamp}'</value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
